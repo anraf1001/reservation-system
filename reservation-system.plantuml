@@ -1,0 +1,11 @@
+@startuml Reservation system
+
+title
+Reservation system
+end title
+
+class ReservationSystem {
+    +ReservationSystem()
+}
+
+@enduml
