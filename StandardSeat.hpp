@@ -2,8 +2,10 @@
 
 #include "Seat.hpp"
 
+constexpr char standardSeatSymbol = 'S';
+
 class StandardSeat : public Seat {
 public:
     StandardSeat(unsigned int id, bool isTaken) noexcept
-        : Seat('S', id, isTaken) {}
+        : Seat(standardSeatSymbol, id, isTaken) {}
 };
