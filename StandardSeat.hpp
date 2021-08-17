@@ -5,5 +5,5 @@
 class StandardSeat : public Seat {
 public:
     StandardSeat(unsigned int id, bool isTaken) noexcept
-        : Seat('S', id, isTaken) {}
+        : Seat(id, isTaken) {}
 };
