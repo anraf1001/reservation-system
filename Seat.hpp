@@ -10,6 +10,7 @@ public:
     bool isTaken() const noexcept { return isTaken_; }
 
     void take() noexcept { isTaken_ = true; }
+    void free() noexcept { isTaken_ = false; }
 
 protected:
     const char symbol_;
