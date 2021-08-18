@@ -2,10 +2,10 @@
 
 #include "Seat.hpp"
 
-constexpr char DisabledSeatSymbol = 'D';
+constexpr char disabledSeatSymbol = 'D';
 
 class DisabledSeat : public Seat {
 public:
     DisabledSeat(unsigned int id, bool isTaken)
-        : Seat(DisabledSeatSymbol, id, isTaken) {}
+        : Seat(disabledSeatSymbol, id, isTaken) {}
 };

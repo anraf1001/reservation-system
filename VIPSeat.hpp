@@ -2,10 +2,10 @@
 
 #include "Seat.hpp"
 
-constexpr char VIPSeatSymbol = 'V';
+constexpr char vipSeatSymbol = 'V';
 
 class VIPSeat : public Seat {
 public:
     VIPSeat(unsigned int id, bool isTaken)
-        : Seat(VIPSeatSymbol, id, isTaken) {}
+        : Seat(vipSeatSymbol, id, isTaken) {}
 };
