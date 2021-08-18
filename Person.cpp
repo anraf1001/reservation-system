@@ -21,7 +21,9 @@ Person::Person(const std::string& name,
                const std::string& surname,
                const std::string& phoneNum,
                const std::string& email,
-               const std::string& pesel) {
+               const std::string& pesel,
+               bool isVaccinated)
+    : isVaccinated_{isVaccinated} {
     if (!isNameValid(name)) {
         throw WrongName{name + " is not a valid name"};
     }
