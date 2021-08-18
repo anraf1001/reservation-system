@@ -4,7 +4,6 @@ class Seat {
 public:
     Seat(char symbol, unsigned int id, bool isTaken) noexcept
         : symbol_{symbol}, id_{id}, isTaken_{isTaken} {}
-    ~Seat() = default;
 
     char getSymbol() const noexcept { return symbol_; }
     unsigned int getID() const noexcept { return id_; }
