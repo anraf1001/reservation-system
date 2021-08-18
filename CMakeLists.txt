@@ -10,9 +10,10 @@ if(CMAKE_BUILD_TYPE MATCHES DEBUG)
 endif()
 
 set(SRC
-  Person.cpp
+    Person.cpp
 )
 set(SRC_UT
+    Person-ut.cpp
     Seat-ut.cpp
 )
 
