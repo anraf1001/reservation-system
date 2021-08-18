@@ -9,8 +9,9 @@ if(CMAKE_BUILD_TYPE MATCHES DEBUG)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=address -fsanitize=undefined")
 endif()
 
-# set(SRC
-# )
+set(SRC
+  Person.cpp
+)
 set(SRC_UT
     Seat-ut.cpp
 )
@@ -24,13 +25,13 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-# add_library(${PROJECT_NAME}-lib ${SRC})
+add_library(${PROJECT_NAME}-lib ${SRC})
 
 add_executable(${PROJECT_NAME} main.cpp)
-# target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}-lib)
+target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}-lib)
 
 add_executable(${PROJECT_NAME}-ut ${SRC_UT})
-target_link_libraries(${PROJECT_NAME}-ut PUBLIC gtest_main) # ${PROJECT_NAME}-lib
+target_link_libraries(${PROJECT_NAME}-ut PUBLIC ${PROJECT_NAME}-lib gtest_main)
 
 include(GoogleTest)
 gtest_discover_tests(${PROJECT_NAME}-ut)
