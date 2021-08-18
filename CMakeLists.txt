@@ -13,7 +13,7 @@ set(SRC
     ReservationSystem.cpp
 )
 set(SRC_UT
-    ReservationSystem-ut.cpp
+    Seat-ut.cpp
 )
 
 include(FetchContent)
