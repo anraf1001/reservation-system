@@ -4,24 +4,32 @@ title
 Reservation system
 end title
 
-class ReservationSystem {
-    +ReservationSystem()
-}
-
 class Seat {
+    +Seat(char symbol, unsigned int id, bool isTaken) noexcept
 
+    +char getSymbol() const noexcept
+    +unsigned int getID() const noexcept
+    +bool isTaken() const noexcept
+
+    +void take() noexcept
+    +void free() noexcept
+
+    ~const char symbol_
+    ~const unsigned int id_
+    ~bool isTaken_
 }
+
 
 class StandardSeat {
-
+    +StandardSeat(unsigned int id, bool isTaken) noexcept
 }
 
 class VIPSeat {
-
+    +VIPSeat(unsigned int id, bool isTaken)
 }
 
 class DisabledSeat {
-
+    +DisabledSeat(unsigned int id, bool isTaken)
 }
 
 StandardSeat <|-- Seat
