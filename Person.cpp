@@ -27,7 +27,7 @@ bool isPhoneNumValid(const std::string& phoneNum) {
 }
 
 bool isEmailValid(const std::string& email) {
-    const std::regex emailRegex{R"(^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$)"};
+    const std::regex emailRegex{R"(^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]+$)"};
     return std::regex_match(email, emailRegex);
 }
 
