@@ -4,6 +4,7 @@
 #include <cctype>
 #include <regex>
 
+#include "exceptions/WrongEmail.hpp"
 #include "exceptions/WrongName.hpp"
 #include "exceptions/WrongPhoneNum.hpp"
 #include "exceptions/WrongSurname.hpp"
@@ -23,6 +24,11 @@ bool isSurnameValid(const std::string& surname) {
 
 bool isPhoneNumValid(const std::string& phoneNum) {
     return std::regex_match(phoneNum, phoneNumRegex);
+}
+
+bool isEmailValid(const std::string& email) {
+    const std::regex emailRegex{R"(^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$)"};
+    return std::regex_match(email, emailRegex);
 }
 
 std::string formatPhonenNum(const std::string& phoneNum) {
@@ -59,6 +65,12 @@ Person::Person(const std::string& name,
         std::string message{phoneNum};
         message += " is not a valid phone number";
         throw WrongPhoneNum{message};
+    }
+
+    if (!isEmailValid(email)) {
+        std::string message{email};
+        message += " is not a valid email address";
+        throw WrongEmail{message};
     }
 
     name_ = name;
