@@ -4,6 +4,7 @@
 
 #include <tuple>
 
+#include "exceptions/WrongEmail.hpp"
 #include "exceptions/WrongName.hpp"
 #include "exceptions/WrongPhoneNum.hpp"
 #include "exceptions/WrongSurname.hpp"
@@ -18,6 +19,7 @@ struct wrongNameTest : ::testing::TestWithParam<std::string> {};
 struct wrongSurnameTest : ::testing::TestWithParam<std::string> {};
 struct rightPhoneNumTest : ::testing::TestWithParam<std::tuple<std::string, std::string>> {};
 struct wrongPhoneNumTest : ::testing::TestWithParam<std::string> {};
+struct wrongEmailTest : ::testing::TestWithParam<std::string> {};
 
 TEST_P(wrongNameTest, shouldThrowExceptionForWrongName) {
     auto wrongName = GetParam();
@@ -40,6 +42,11 @@ TEST_P(rightPhoneNumTest, shouldShouldFormatPhoneNum) {
 TEST_P(wrongPhoneNumTest, shouldThrowExceptionForWrongPhoneNum) {
     auto wrongPhoneNum = GetParam();
     ASSERT_THROW(Person(rightName, rightSurname, wrongPhoneNum, rightEmail, rightPESEL), WrongPhoneNum);
+}
+
+TEST_P(wrongEmailTest, shouldThrowExceptionForWrongEmail) {
+    auto wrongEmail = GetParam();
+    ASSERT_THROW(Person(rightName, rightSurname, rightPhoneNum, wrongEmail, rightPESEL), WrongEmail);
 }
 
 INSTANTIATE_TEST_CASE_P(
@@ -80,4 +87,14 @@ INSTANTIATE_TEST_CASE_P(
                       "+6985469875369458",
                       "874236518952",
                       "-48 123-456-789",
+                      ""));
+
+INSTANTIATE_TEST_CASE_P(
+    PersonTest,
+    wrongEmailTest,
+    ::testing::Values("sagdgdg",
+                      "sndj@!$%.com",
+                      "jdh26@dlk",
+                      "lsdko@kdocl.90",
+                      "_!@gmail.com",
                       ""));
