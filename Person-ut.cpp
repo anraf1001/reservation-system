@@ -63,7 +63,14 @@ INSTANTIATE_TEST_CASE_P(
     rightPhoneNumTest,
     ::testing::Values(
         std::make_tuple("123456789", "123456789"),
-        std::make_tuple("123-456-789", "123456789")));
+        std::make_tuple("123-456-789", "123456789"),
+        std::make_tuple("123 456 789", "123456789"),
+        std::make_tuple("+48123456789", "123456789"),
+        std::make_tuple("+48 123456789", "123456789"),
+        std::make_tuple("+48123-456-789", "123456789"),
+        std::make_tuple("+48123 456 789", "123456789"),
+        std::make_tuple("+48 123 456 789", "123456789"),
+        std::make_tuple("+48 123-456-789", "123456789")));
 
 INSTANTIATE_TEST_CASE_P(
     PersonTest,
