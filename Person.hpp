@@ -18,6 +18,12 @@ public:
            const std::string& pesel,
            bool isVaccinated);
 
+    std::string getName() const { return name_; }
+    std::string getSurname() const { return surname_; }
+    std::string getPhoneNum() const { return phoneNum_; }
+    std::string getEmail() const { return email_; }
+    std::string getPesel() const { return pesel_; }
+
     bool isVaccinated_;
 
 private:
