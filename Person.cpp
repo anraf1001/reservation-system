@@ -13,7 +13,7 @@ bool isNameValid(const std::string& name) {
            });
 }
 
-bool isSurnameValid(const std::string surname) {
+bool isSurnameValid(const std::string& surname) {
     return isNameValid(surname);
 }
 
