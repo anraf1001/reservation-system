@@ -8,7 +8,7 @@
 
 bool isNameValid(const std::string& name) {
     return isupper(name.front()) &&
-           std::all_of(name.begin(), name.end(), [](auto letter) {
+           std::all_of(name.begin() + 1, name.end(), [](auto letter) {
                return islower(letter);
            });
 }
