@@ -3,6 +3,7 @@
 #include "Person.hpp"
 
 #include "exceptions/WrongName.hpp"
+#include "exceptions/WrongPhoneNum.hpp"
 #include "exceptions/WrongSurname.hpp"
 
 constexpr const char* rightName = "Jan";
@@ -11,30 +12,47 @@ constexpr const char* rightPhoneNum = "123456789";
 constexpr const char* rightEmail = "test@email.com";
 constexpr const char* rightPESEL = "98564726982";
 
-TEST(PersonTest, shouldThrowExceptionForWrongName) {
-    constexpr const char* wrongName1 = "jan";
-    ASSERT_THROW(Person(wrongName1, rightSurname, rightPhoneNum, rightEmail, rightPESEL), WrongName);
+struct wrongNameTest : ::testing::TestWithParam<const char*> {};
+struct wrongSurnameTest : ::testing::TestWithParam<const char*> {};
+struct wrongPhoneNumTest : ::testing::TestWithParam<const char*> {};
 
-    constexpr const char* wrongName2 = "jAn";
-    ASSERT_THROW(Person(wrongName2, rightSurname, rightPhoneNum, rightEmail, rightPESEL), WrongName);
-
-    constexpr const char* wrongName3 = "Jan3";
-    ASSERT_THROW(Person(wrongName3, rightSurname, rightPhoneNum, rightEmail, rightPESEL), WrongName);
-
-    constexpr const char* wrongName4 = "";
-    ASSERT_THROW(Person(wrongName4, rightSurname, rightPhoneNum, rightEmail, rightPESEL), WrongName);
+TEST_P(wrongNameTest, shouldThrowExceptionForWrongName) {
+    auto wrongName = GetParam();
+    ASSERT_THROW(Person(wrongName, rightSurname, rightPhoneNum, rightEmail, rightPESEL), WrongName);
 }
 
-TEST(PersonTest, shouldThrowExceptionForWrongSurname) {
-    constexpr const char* wrongSurname1 = "kowalski";
-    ASSERT_THROW(Person(rightName, wrongSurname1, rightPhoneNum, rightEmail, rightPESEL), WrongSurname);
-
-    constexpr const char* wrongSurname2 = "kOwaLski";
-    ASSERT_THROW(Person(rightName, wrongSurname2, rightPhoneNum, rightEmail, rightPESEL), WrongSurname);
-
-    constexpr const char* wrongSurname3 = "6Kowalski4";
-    ASSERT_THROW(Person(rightName, wrongSurname3, rightPhoneNum, rightEmail, rightPESEL), WrongSurname);
-
-    constexpr const char* wrongSurname4 = "";
-    ASSERT_THROW(Person(rightName, wrongSurname4, rightPhoneNum, rightEmail, rightPESEL), WrongSurname);
+TEST_P(wrongSurnameTest, shouldThrowExceptionForWrongSurname) {
+    auto wrongSurname = GetParam();
+    ASSERT_THROW(Person(rightName, wrongSurname, rightPhoneNum, rightEmail, rightPESEL), WrongSurname);
 }
+
+TEST_P(wrongPhoneNumTest, shouldThrowExceptionForWrongPhoneNum) {
+    auto wrongPhoneNum = GetParam();
+    ASSERT_THROW(Person(rightName, rightSurname, wrongPhoneNum, rightEmail, rightPESEL), WrongPhoneNum);
+}
+
+INSTANTIATE_TEST_CASE_P(
+    PersonTest,
+    wrongNameTest,
+    ::testing::Values("jan",
+                      "jAn",
+                      "Jan3",
+                      ""));
+
+INSTANTIATE_TEST_CASE_P(
+    PersonTest,
+    wrongSurnameTest,
+    ::testing::Values("kowalski",
+                      "kOwaLski",
+                      "6Kowalski4",
+                      ""));
+
+INSTANTIATE_TEST_CASE_P(
+    PersonTest,
+    wrongPhoneNumTest,
+    ::testing::Values("25648",
+                      "+48 5876sd6w9",
+                      "+6985469875369458",
+                      "874236518952",
+                      "-48 123-456-789",
+                      ""));
