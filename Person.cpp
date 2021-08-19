@@ -8,7 +8,7 @@
 #include "exceptions/WrongPhoneNum.hpp"
 #include "exceptions/WrongSurname.hpp"
 
-const std::regex phoneNumRegex{R"((\+48)?\s?(\d{3})[-\s]?(\d{3})[-\s]?(\d{3}))"};
+const std::regex phoneNumRegex{R"((\+\d{2,3})?\s?(\d{3})[-\s]?(\d{3})[-\s]?(\d{3}))"};
 
 bool isNameValid(const std::string& name) {
     return isupper(name.front()) &&
