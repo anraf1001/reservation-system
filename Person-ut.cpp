@@ -3,6 +3,7 @@
 #include "Person.hpp"
 
 #include "exceptions/WrongName.hpp"
+#include "exceptions/WrongSurname.hpp"
 
 constexpr const char* rightName = "Jan";
 constexpr const char* rightSurname = "Kowalski";
@@ -26,14 +27,14 @@ TEST(PersonTest, shouldThrowExceptionForWrongName) {
 
 TEST(PersonTest, shouldThrowExceptionForWrongSurname) {
     constexpr const char* wrongSurname1 = "kowalski";
-    ASSERT_THROW(Person(rightName, wrongSurname1, rightPhoneNum, rightEmail, rightPESEL), WrongName);
+    ASSERT_THROW(Person(rightName, wrongSurname1, rightPhoneNum, rightEmail, rightPESEL), WrongSurname);
 
     constexpr const char* wrongSurname2 = "kOwaLski";
-    ASSERT_THROW(Person(rightName, wrongSurname2, rightPhoneNum, rightEmail, rightPESEL), WrongName);
+    ASSERT_THROW(Person(rightName, wrongSurname2, rightPhoneNum, rightEmail, rightPESEL), WrongSurname);
 
     constexpr const char* wrongSurname3 = "6Kowalski4";
-    ASSERT_THROW(Person(rightName, wrongSurname3, rightPhoneNum, rightEmail, rightPESEL), WrongName);
+    ASSERT_THROW(Person(rightName, wrongSurname3, rightPhoneNum, rightEmail, rightPESEL), WrongSurname);
 
     constexpr const char* wrongSurname4 = "";
-    ASSERT_THROW(Person(rightName, wrongSurname4, rightPhoneNum, rightEmail, rightPESEL), WrongName);
+    ASSERT_THROW(Person(rightName, wrongSurname4, rightPhoneNum, rightEmail, rightPESEL), WrongSurname);
 }
