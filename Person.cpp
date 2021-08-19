@@ -25,6 +25,17 @@ bool isPhoneNumValid(const std::string& phoneNum) {
     return std::regex_match(phoneNum, phoneNumRegex);
 }
 
+std::string formatPhonenNum(const std::string& phoneNum) {
+    std::smatch matches;
+    std::regex_search(phoneNum, matches, phoneNumRegex);
+
+    std::string formattedPhoneNum = matches[2];
+    formattedPhoneNum += matches[3];
+    formattedPhoneNum += matches[4];
+
+    return formattedPhoneNum;
+}
+
 Person::Person(const std::string& name,
                const std::string& surname,
                const std::string& phoneNum,
@@ -52,7 +63,7 @@ Person::Person(const std::string& name,
 
     name_ = name;
     surname_ = surname;
-    phoneNum_ = phoneNum;
+    phoneNum_ = formatPhonenNum(phoneNum);
     email_ = email;
     pesel_ = pesel;
 }
