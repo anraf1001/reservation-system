@@ -6,10 +6,13 @@
 
 #include "exceptions/WrongEmail.hpp"
 #include "exceptions/WrongName.hpp"
+#include "exceptions/WrongPESEL.hpp"
 #include "exceptions/WrongPhoneNum.hpp"
 #include "exceptions/WrongSurname.hpp"
 
 const std::regex phoneNumRegex{R"(^(\+\d{2,3})?\s?(\d{3})[-\s]?(\d{3})[-\s]?(\d{3})$)"};
+
+constexpr char firstDigit = '0';
 
 bool isNameValid(const std::string& name) {
     return isupper(name.front()) &&
@@ -29,6 +32,30 @@ bool isPhoneNumValid(const std::string& phoneNum) {
 bool isEmailValid(const std::string& email) {
     const std::regex emailRegex{R"(^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]+$)"};
     return std::regex_match(email, emailRegex);
+}
+
+bool isPESELValid(const std::string& pesel) {
+    if (pesel.size() != 11 || std::any_of(pesel.cbegin(), pesel.cend(),
+                                          [](auto el) {
+                                              return !isdigit(el);
+                                          })) {
+        return false;
+    }
+
+    const int controlSum = 9 * static_cast<int>(pesel[0] - firstDigit) +
+                           7 * static_cast<int>(pesel[1] - firstDigit) +
+                           3 * static_cast<int>(pesel[2] - firstDigit) +
+                           1 * static_cast<int>(pesel[3] - firstDigit) +
+                           9 * static_cast<int>(pesel[4] - firstDigit) +
+                           7 * static_cast<int>(pesel[5] - firstDigit) +
+                           3 * static_cast<int>(pesel[6] - firstDigit) +
+                           1 * static_cast<int>(pesel[7] - firstDigit) +
+                           9 * static_cast<int>(pesel[8] - firstDigit) +
+                           7 * static_cast<int>(pesel[9] - firstDigit);
+
+    const int controlNum = controlSum % 10;
+
+    return controlNum == static_cast<int>(pesel.back() - firstDigit);
 }
 
 std::string formatPhonenNum(const std::string& phoneNum) {
@@ -71,6 +98,12 @@ Person::Person(const std::string& name,
         std::string message{email};
         message += " is not a valid email address";
         throw WrongEmail{message};
+    }
+
+    if (!isPESELValid(pesel)) {
+        std::string message{pesel};
+        message += " is not a valid pesel number";
+        throw WrongPESEL{message};
     }
 
     name_ = name;
