@@ -6,6 +6,7 @@
 
 #include "exceptions/WrongEmail.hpp"
 #include "exceptions/WrongName.hpp"
+#include "exceptions/WrongPESEL.hpp"
 #include "exceptions/WrongPhoneNum.hpp"
 #include "exceptions/WrongSurname.hpp"
 
@@ -20,6 +21,7 @@ struct wrongSurnameTest : ::testing::TestWithParam<std::string> {};
 struct rightPhoneNumTest : ::testing::TestWithParam<std::tuple<std::string, std::string>> {};
 struct wrongPhoneNumTest : ::testing::TestWithParam<std::string> {};
 struct wrongEmailTest : ::testing::TestWithParam<std::string> {};
+struct wrongPESELTest : ::testing::TestWithParam<std::string> {};
 
 TEST_P(wrongNameTest, shouldThrowExceptionForWrongName) {
     auto wrongName = GetParam();
@@ -47,6 +49,11 @@ TEST_P(wrongPhoneNumTest, shouldThrowExceptionForWrongPhoneNum) {
 TEST_P(wrongEmailTest, shouldThrowExceptionForWrongEmail) {
     auto wrongEmail = GetParam();
     ASSERT_THROW(Person(rightName, rightSurname, rightPhoneNum, wrongEmail, rightPESEL), WrongEmail);
+}
+
+TEST_P(wrongPESELTest, shouldThrowExceptionForWrongPESEL) {
+    auto wrongPESEL = GetParam();
+    ASSERT_THROW(Person(rightName, rightSurname, rightPhoneNum, rightEmail, wrongPESEL), WrongPESEL);
 }
 
 INSTANTIATE_TEST_CASE_P(
@@ -97,4 +104,12 @@ INSTANTIATE_TEST_CASE_P(
                       "jdh26@dlk",
                       "lsdko@kdocl.90",
                       "_!@gmail.com",
+                      ""));
+
+INSTANTIATE_TEST_CASE_P(
+    PersonTest,
+    wrongPESELTest,
+    ::testing::Values("00211009695",
+                      "54876425897",
+                      "sdffg8556",
                       ""));
