@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <cctype>
+#include <chrono>
 #include <regex>
 
 #include "exceptions/WrongEmail.hpp"
@@ -10,9 +11,34 @@
 #include "exceptions/WrongPhoneNum.hpp"
 #include "exceptions/WrongSurname.hpp"
 
+namespace chrono = std::chrono;
+
 const std::regex phoneNumRegex{R"(^(\+\d{2,3})?\s?(\d{3})[-\s]?(\d{3})[-\s]?(\d{3})$)"};
 
-constexpr char firstDigit = '0';
+int calculateYearsFromDate(const std::string& pesel) noexcept {
+    using Days = chrono::days;
+    using Years = chrono::years;
+
+    std::string yearStr = pesel.substr(0, 2);
+    std::string monthStr = pesel.substr(2, 2);
+    std::string dayStr = pesel.substr(4, 2);
+
+    chrono::day day{(unsigned)std::stoi(dayStr)};
+    chrono::month month;
+    chrono::year year;
+    if (std::stoi(monthStr) <= 12) {
+        month = chrono::month{(unsigned)std::stoi(monthStr)};
+        year = chrono::year{1900 + std::stoi(yearStr)};
+    } else {
+        month = chrono::month{(unsigned)(std::stoi(monthStr) - 20)};
+        year = chrono::year{2000 + std::stoi(yearStr)};
+    }
+
+    auto dateOfBirth = chrono::sys_days{year / month / day};
+    auto today = chrono::sys_days{chrono::floor<Days>(chrono::system_clock::now())};
+
+    return (int)chrono::floor<Years>(today - dateOfBirth).count();
+}
 
 bool isNameValid(const std::string& name) {
     return isupper(name.front()) &&
@@ -34,6 +60,11 @@ bool isEmailValid(const std::string& email) {
     return std::regex_match(email, emailRegex);
 }
 
+int intFromChar(char charToConv) noexcept {
+    constexpr char firstDigit = '0';
+    return static_cast<int>(charToConv - firstDigit);
+}
+
 bool isPESELValid(const std::string& pesel) {
     if (pesel.size() != 11 || std::any_of(pesel.cbegin(), pesel.cend(),
                                           [](auto el) {
@@ -42,20 +73,24 @@ bool isPESELValid(const std::string& pesel) {
         return false;
     }
 
-    const int controlSum = 9 * static_cast<int>(pesel[0] - firstDigit) +
-                           7 * static_cast<int>(pesel[1] - firstDigit) +
-                           3 * static_cast<int>(pesel[2] - firstDigit) +
-                           1 * static_cast<int>(pesel[3] - firstDigit) +
-                           9 * static_cast<int>(pesel[4] - firstDigit) +
-                           7 * static_cast<int>(pesel[5] - firstDigit) +
-                           3 * static_cast<int>(pesel[6] - firstDigit) +
-                           1 * static_cast<int>(pesel[7] - firstDigit) +
-                           9 * static_cast<int>(pesel[8] - firstDigit) +
-                           7 * static_cast<int>(pesel[9] - firstDigit);
+    const int controlSum = 9 * intFromChar(pesel[0]) +
+                           7 * intFromChar(pesel[1]) +
+                           3 * intFromChar(pesel[2]) +
+                           1 * intFromChar(pesel[3]) +
+                           9 * intFromChar(pesel[4]) +
+                           7 * intFromChar(pesel[5]) +
+                           3 * intFromChar(pesel[6]) +
+                           1 * intFromChar(pesel[7]) +
+                           9 * intFromChar(pesel[8]) +
+                           7 * intFromChar(pesel[9]);
 
     const int controlNum = controlSum % 10;
 
-    return controlNum == static_cast<int>(pesel.back() - firstDigit);
+    if (controlNum != intFromChar(pesel.back())) {
+        return false;
+    }
+
+    return calculateYearsFromDate(pesel) >= 0;
 }
 
 std::string formatPhonenNum(const std::string& phoneNum) {
@@ -111,4 +146,8 @@ Person::Person(const std::string& name,
     phoneNum_ = formatPhonenNum(phoneNum);
     email_ = email;
     pesel_ = pesel;
+}
+
+unsigned int Person::getAge() const noexcept {
+    return calculateYearsFromDate(pesel_);
 }

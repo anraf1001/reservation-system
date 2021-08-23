@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "DisabledSeat.hpp"
+#include "Person.hpp"
 #include "StandardSeat.hpp"
 #include "VIPSeat.hpp"
 
@@ -15,6 +16,9 @@ int main() {
     for (const auto& seat : vec) {
         std::cout << "Seat " << seat->getID() << " Type: " << seat->getSymbol() << '\n';
     }
+
+    Person person{"Jan", "Kowalski", "123456789", "email@email.com", "20271854937"};
+    std::cout << person.getAge() << '\n';
 
     return 0;
 }

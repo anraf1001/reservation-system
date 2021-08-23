@@ -14,7 +14,7 @@ constexpr const char* rightName = "Jan";
 constexpr const char* rightSurname = "Kowalski";
 constexpr const char* rightPhoneNum = "123456789";
 constexpr const char* rightEmail = "test@email.com";
-constexpr const char* rightPESEL = "98564726982";
+constexpr const char* rightPESEL = "20271854937";
 
 struct wrongNameTest : ::testing::TestWithParam<std::string> {};
 struct wrongSurnameTest : ::testing::TestWithParam<std::string> {};
@@ -54,6 +54,19 @@ TEST_P(wrongEmailTest, shouldThrowExceptionForWrongEmail) {
 TEST_P(wrongPESELTest, shouldThrowExceptionForWrongPESEL) {
     auto wrongPESEL = GetParam();
     ASSERT_THROW(Person(rightName, rightSurname, rightPhoneNum, rightEmail, wrongPESEL), WrongPESEL);
+}
+
+TEST(getAgeTest, shouldCalculateAgeFromPESELNum) {
+    constexpr const char* pesel1900 = "78051654912";
+    constexpr unsigned int pesel1900Age = 43;
+    constexpr const char* pesel2000 = "20271854937";
+    constexpr unsigned int pesel2000Age = 1;
+
+    Person person1{rightName, rightSurname, rightPhoneNum, rightEmail, pesel1900};
+    ASSERT_EQ(person1.getAge(), pesel1900Age);
+
+    Person person2{rightName, rightSurname, rightPhoneNum, rightEmail, pesel2000};
+    ASSERT_EQ(person2.getAge(), pesel2000Age);
 }
 
 INSTANTIATE_TEST_CASE_P(
