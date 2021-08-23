@@ -14,11 +14,10 @@ class Seat {
     +void take() noexcept
     +void free() noexcept
 
-    ~const char symbol_
-    ~const unsigned int id_
-    ~bool isTaken_
+    #const char symbol_
+    #const unsigned int id_
+    #bool isTaken_
 }
-
 
 class StandardSeat {
     +StandardSeat(unsigned int id, bool isTaken) noexcept
@@ -30,6 +29,25 @@ class VIPSeat {
 
 class DisabledSeat {
     +DisabledSeat(unsigned int id, bool isTaken)
+}
+
+class Person {
+    +Person(const std::string& name, const std::string& surname, const std::string& phoneNum, const std::string& email, const std::string& pesel)
+    +Person(const std::string& name, const std::string& surname, const std::string& phoneNum, const std::string& email, const std::string& pesel, bool isVaccinated)
+
+    +std::string getName() const
+    +std::string getSurname() const
+    +std::string getPhoneNum() const
+    +std::string getEmail() const
+    +std::string getPesel() const
+
+    +bool isVaccinated_
+
+    -std::string name_
+    -std::string surname_
+    -std::string phoneNum_
+    -std::string email_
+    -std::string pesel_
 }
 
 StandardSeat <|-- Seat
