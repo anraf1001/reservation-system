@@ -41,6 +41,8 @@ class Person {
     +std::string getEmail() const
     +std::string getPesel() const
 
+    +unsigned int getAge() const noexcept
+
     +bool isVaccinated_
 
     -std::string name_
