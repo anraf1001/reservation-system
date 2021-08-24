@@ -5,30 +5,37 @@ Reservation system
 end title
 
 class Seat {
-    +Seat(char symbol, unsigned int id, bool isTaken) noexcept
+    +Seat(char symbol, unsigned int id, unsigned int price, std::shared_ptr<Person> owner) noexcept
+    +Seat(char symbol, unsigned int id, unsigned int price) noexcept
 
     +char getSymbol() const noexcept
     +unsigned int getID() const noexcept
+    +std::shared_ptr<Person> getOwner() const noexcept
     +bool isTaken() const noexcept
+    +unsigned int getPrice() const noexcept
 
-    +void take() noexcept
+    +void take(std::shared_ptr<Person> newOwner) noexcept
     +void free() noexcept
 
     #const char symbol_
     #const unsigned int id_
-    #bool isTaken_
+    #const unsigned int price_;
+    #std::shared_ptr<Person> owner_;
 }
 
 class StandardSeat {
-    +StandardSeat(unsigned int id, bool isTaken) noexcept
+    +StandardSeat(unsigned int id, std::shared_ptr<Person> owner) noexcept
+    +StandardSeat(unsigned int id) noexcept
 }
 
 class VIPSeat {
-    +VIPSeat(unsigned int id, bool isTaken)
+    +VIPSeat(unsigned int id, std::shared_ptr<Person> owner) noexcept
+    +VIPSeat(unsigned int id) noexcept
 }
 
 class DisabledSeat {
-    +DisabledSeat(unsigned int id, bool isTaken)
+    +DisabledSeat(unsigned int id, std::shared_ptr<Person> owner) noexcept
+    +DisabledSeat(unsigned int id) noexcept
 }
 
 class Person {
@@ -55,5 +62,7 @@ class Person {
 StandardSeat <|-- Seat
 VIPSeat <|-- Seat
 DisabledSeat <|-- Seat
+
+Seat o-- Person
 
 @enduml
