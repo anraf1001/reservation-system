@@ -59,9 +59,9 @@ class Person {
     -std::string pesel_
 }
 
-StandardSeat <|-- Seat
-VIPSeat <|-- Seat
-DisabledSeat <|-- Seat
+Seat <|-- StandardSeat
+Seat <|-- VIPSeat
+Seat <|-- DisabledSeat
 
 Seat o-- Person
 
