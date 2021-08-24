@@ -7,6 +7,8 @@ constexpr unsigned int vipPrice = 1000;
 
 class VIPSeat : public Seat {
 public:
-    VIPSeat(unsigned int id, bool isTaken)
-        : Seat(vipSeatSymbol, id, vipPrice, isTaken) {}
+    VIPSeat(unsigned int id, std::shared_ptr<Person> owner) noexcept
+        : Seat(vipSeatSymbol, id, vipPrice, owner) {}
+    VIPSeat(unsigned int id) noexcept
+        : Seat(vipSeatSymbol, id, vipPrice) {}
 };
