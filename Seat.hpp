@@ -17,10 +17,7 @@ public:
     bool isTaken() const noexcept { return owner_ != nullptr; }
     unsigned int getPrice() const noexcept { return price_; }
 
-    void take(std::shared_ptr<Person> newOwner) noexcept {
-        owner_.reset();
-        owner_ = newOwner;
-    }
+    void take(std::shared_ptr<Person> newOwner) noexcept { owner_ = newOwner; }
     void free() noexcept { owner_.reset(); }
 
 protected:
