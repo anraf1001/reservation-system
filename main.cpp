@@ -14,7 +14,7 @@ int main() {
               std::make_shared<DisabledSeat>(678)};
 
     for (const auto& seat : vec) {
-        std::cout << "Seat " << seat->getID() << " Type: " << seat->getSymbol() << '\n';
+        std::cout << "Seat " << seat->getID() << " Type: " << seat->getSymbol() << " Price: " << seat->getPrice() << '\n';
     }
 
     Person person{"Jan", "Kowalski", "123456789", "email@email.com", "20271854937"};
