@@ -8,7 +8,9 @@ constexpr unsigned int vipPrice = 1000;
 class VIPSeat : public Seat {
 public:
     VIPSeat(unsigned int id, std::shared_ptr<Person> owner) noexcept
-        : Seat(vipSeatSymbol, id, vipPrice, owner) {}
+        : Seat(vipSeatSymbol, id, owner) {}
     VIPSeat(unsigned int id) noexcept
-        : Seat(vipSeatSymbol, id, vipPrice) {}
+        : Seat(vipSeatSymbol, id) {}
+
+    constexpr unsigned int getPrice() const noexcept override { return vipPrice; }
 };
