@@ -14,16 +14,15 @@ jobs:
       run: sudo apt install g++-11 -y
       
     - name: Create build folder
-      working-directory: homework/shared_ptr
       run: mkdir build
     - name: Run cmake
-      working-directory: homework/shared_ptr/build
+      working-directory: build
       run: cmake ..
       env:
         CXX: g++-11
     - name: Compile
-      working-directory: homework/shared_ptr/build
+      working-directory: build
       run: make
     - name: Run tests and sanitizer
-      working-directory: homework/shared_ptr/build
+      working-directory: build
       run: ctest -V
