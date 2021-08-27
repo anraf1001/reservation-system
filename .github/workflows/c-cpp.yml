@@ -1,0 +1,29 @@
+  
+name: CMake and sanitizers
+
+on: [push, pull_request]
+
+jobs:
+  ctestsanitizers:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - uses: actions/checkout@v1
+    
+    - name: Download g++-11
+      run: sudo apt install g++-11 -y
+      
+    - name: Create build folder
+      working-directory: homework/shared_ptr
+      run: mkdir build
+    - name: Run cmake
+      working-directory: homework/shared_ptr/build
+      run: cmake ..
+      env:
+        CXX: g++-11
+    - name: Compile
+      working-directory: homework/shared_ptr/build
+      run: make
+    - name: Run tests and sanitizer
+      working-directory: homework/shared_ptr/build
+      run: ctest -V
