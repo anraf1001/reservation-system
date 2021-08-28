@@ -18,13 +18,13 @@ public:
            const std::string& pesel,
            bool isVaccinated);
 
-    unsigned int getAge() const noexcept;
+    unsigned int getAge() const;
 
-    std::string getName() const { return name_; }
-    std::string getSurname() const { return surname_; }
-    std::string getPhoneNum() const { return phoneNum_; }
-    std::string getEmail() const { return email_; }
-    std::string getPesel() const { return pesel_; }
+    std::string getName() const noexcept { return name_; }
+    std::string getSurname() const noexcept { return surname_; }
+    std::string getPhoneNum() const noexcept { return phoneNum_; }
+    std::string getEmail() const noexcept { return email_; }
+    std::string getPesel() const noexcept { return pesel_; }
 
     bool isVaccinated_;
 
