@@ -17,7 +17,7 @@ int main() {
         std::cout << "Seat " << seat->getID() << " Type: " << seat->getSymbol() << " Price: " << seat->getPrice() << '\n';
     }
     for (const auto& seat : vec) {
-        std::cout << *seat;
+        std::cout << *seat << ' ';
     }
     std::cout << '\n';
 
@@ -26,7 +26,7 @@ int main() {
 
     vec[1]->take(std::make_shared<Person>("Jan", "Kowalski", "123456789", "email@email.com", "20271854937"));
     for (const auto& seat : vec) {
-        std::cout << *seat;
+        std::cout << *seat << ' ';
     }
     std::cout << '\n';
 
