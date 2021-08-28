@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <ostream>
 
 #include "Person.hpp"
 
@@ -26,3 +27,12 @@ protected:
     const unsigned int id_;
     std::shared_ptr<Person> owner_;
 };
+
+std::ostream& operator<<(std::ostream& out, const Seat& seat) {
+    if (seat.isTaken()) {
+        out << ':' << seat.getSymbol() << ": ";
+    } else {
+        out << '[' << seat.getSymbol() << "] ";
+    }
+    return out;
+}
