@@ -15,7 +15,7 @@ namespace chrono = std::chrono;
 
 const std::regex phoneNumRegex{R"(^(\+\d{2,3})?\s?(\d{3})[-\s]?(\d{3})[-\s]?(\d{3})$)"};
 
-int calculateYearsFromDate(const std::string& pesel) noexcept {
+int calculateYearsFromDate(const std::string& pesel) {
     using Days = chrono::days;
     using Years = chrono::years;
 
@@ -148,6 +148,6 @@ Person::Person(const std::string& name,
     pesel_ = pesel;
 }
 
-unsigned int Person::getAge() const noexcept {
+unsigned int Person::getAge() const {
     return calculateYearsFromDate(pesel_);
 }
