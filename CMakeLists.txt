@@ -26,9 +26,13 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
+set(FLAGS -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2 -Wduplicated-cond -Wduplicated-branches -Wlogical-op -Wuseless-cast)
+
 add_library(${PROJECT_NAME}-lib ${SRC})
+target_compile_options(${PROJECT_NAME}-lib PRIVATE ${FLAGS})
 
 add_executable(${PROJECT_NAME} main.cpp)
+target_compile_options(${PROJECT_NAME} PRIVATE ${FLAGS})
 target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}-lib)
 
 add_executable(${PROJECT_NAME}-ut ${SRC_UT})

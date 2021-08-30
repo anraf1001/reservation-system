@@ -18,7 +18,7 @@ public:
            const std::string& pesel,
            bool isVaccinated);
 
-    unsigned int getAge() const;
+    int getAge() const;
 
     std::string getName() const noexcept { return name_; }
     std::string getSurname() const noexcept { return surname_; }
