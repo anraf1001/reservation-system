@@ -23,21 +23,21 @@ int calculateYearsFromDate(const std::string& pesel) {
     std::string monthStr = pesel.substr(2, 2);
     std::string dayStr = pesel.substr(4, 2);
 
-    chrono::day day{(unsigned)std::stoi(dayStr)};
+    chrono::day day{static_cast<unsigned>(std::stoi(dayStr))};
     chrono::month month;
     chrono::year year;
     if (std::stoi(monthStr) <= 12) {
-        month = chrono::month{(unsigned)std::stoi(monthStr)};
+        month = chrono::month{static_cast<unsigned>(std::stoi(monthStr))};
         year = chrono::year{1900 + std::stoi(yearStr)};
     } else {
-        month = chrono::month{(unsigned)(std::stoi(monthStr) - 20)};
+        month = chrono::month{static_cast<unsigned>(std::stoi(monthStr) - 20)};
         year = chrono::year{2000 + std::stoi(yearStr)};
     }
 
     auto dateOfBirth = chrono::sys_days{year / month / day};
     auto today = chrono::sys_days{chrono::floor<Days>(chrono::system_clock::now())};
 
-    return (int)chrono::floor<Years>(today - dateOfBirth).count();
+    return static_cast<int>(chrono::floor<Years>(today - dateOfBirth).count());
 }
 
 bool isNameValid(const std::string& name) {
@@ -62,7 +62,7 @@ bool isEmailValid(const std::string& email) {
 
 int intFromChar(char charToConv) noexcept {
     constexpr char firstDigit = '0';
-    return static_cast<int>(charToConv - firstDigit);
+    return charToConv - firstDigit;
 }
 
 bool isPESELValid(const std::string& pesel) {
@@ -148,6 +148,6 @@ Person::Person(const std::string& name,
     pesel_ = pesel;
 }
 
-unsigned int Person::getAge() const {
+int Person::getAge() const {
     return calculateYearsFromDate(pesel_);
 }
