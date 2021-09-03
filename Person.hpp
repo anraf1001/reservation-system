@@ -8,25 +8,26 @@ public:
            const std::string& surname,
            const std::string& phoneNum,
            const std::string& email,
-           const std::string& pesel)
-        : Person{name, surname, phoneNum, email, pesel, false} {}
+           const std::string& pesel,
+           bool isVaccinated);
 
     Person(const std::string& name,
            const std::string& surname,
            const std::string& phoneNum,
            const std::string& email,
-           const std::string& pesel,
-           bool isVaccinated);
+           const std::string& pesel)
+        : Person{name, surname, phoneNum, email, pesel, false} {}
 
-    int getAge() const;
+    void setAsVaccinated() { isVaccinated_ = true; }
 
-    std::string getName() const noexcept { return name_; }
-    std::string getSurname() const noexcept { return surname_; }
-    std::string getPhoneNum() const noexcept { return phoneNum_; }
-    std::string getEmail() const noexcept { return email_; }
-    std::string getPesel() const noexcept { return pesel_; }
+    [[nodiscard]] int getAge() const;
 
-    bool isVaccinated_;
+    [[nodiscard]] std::string getName() const { return name_; }
+    [[nodiscard]] std::string getSurname() const { return surname_; }
+    [[nodiscard]] std::string getPhoneNum() const { return phoneNum_; }
+    [[nodiscard]] std::string getEmail() const { return email_; }
+    [[nodiscard]] std::string getPesel() const { return pesel_; }
+    [[nodiscard]] bool isVaccinated() const noexcept { return isVaccinated_; }
 
 private:
     std::string name_;
@@ -34,4 +35,6 @@ private:
     std::string phoneNum_;
     std::string email_;
     std::string pesel_;
+
+    bool isVaccinated_;
 };
