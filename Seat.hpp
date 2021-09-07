@@ -13,7 +13,7 @@ public:
         : Seat{symbol, id, nullptr} {}
     virtual ~Seat() = default;
 
-    virtual constexpr unsigned int getPrice() const noexcept = 0;
+    [[nodiscard]] virtual constexpr unsigned int getPrice() const noexcept = 0;
 
     [[nodiscard]] char getSymbol() const noexcept { return symbol_; }
     [[nodiscard]] unsigned getID() const noexcept { return id_; }

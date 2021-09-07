@@ -12,5 +12,5 @@ public:
     DisabledSeat(unsigned int id) noexcept
         : Seat(disabledSeatSymbol, id) {}
 
-    constexpr unsigned int getPrice() const noexcept override { return disabledPrice; }
+    [[nodiscard]] constexpr unsigned int getPrice() const noexcept override { return disabledPrice; }
 };

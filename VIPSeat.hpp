@@ -12,5 +12,5 @@ public:
     VIPSeat(unsigned int id) noexcept
         : Seat(vipSeatSymbol, id) {}
 
-    constexpr unsigned int getPrice() const noexcept override { return vipPrice; }
+    [[nodiscard]] constexpr unsigned int getPrice() const noexcept override { return vipPrice; }
 };
