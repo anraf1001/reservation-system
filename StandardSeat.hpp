@@ -13,5 +13,5 @@ public:
     StandardSeat(unsigned int id) noexcept
         : Seat(standardSeatSymbol, id) {}
 
-    constexpr unsigned int getPrice() const noexcept override { return standardPrice; }
+    [[nodiscard]] constexpr unsigned int getPrice() const noexcept override { return standardPrice; }
 };
