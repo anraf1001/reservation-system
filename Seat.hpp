@@ -17,7 +17,7 @@ public:
 
     [[nodiscard]] char getSymbol() const noexcept { return symbol_; }
     [[nodiscard]] unsigned getID() const noexcept { return id_; }
-    [[nodiscard]] std::shared_ptr<Person> getOwner() const { return owner_; }
+    [[nodiscard]] Person* getOwner() const { return owner_.get(); }
     [[nodiscard]] bool isTaken() const noexcept { return owner_ != nullptr; }
 
     void take(std::shared_ptr<Person> newOwner) noexcept { owner_ = newOwner; }
