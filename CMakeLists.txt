@@ -11,10 +11,12 @@ endif()
 
 set(SRC
     Person.cpp
+    ReservationSystem.cpp
     Seat.cpp
 )
 set(SRC_UT
     Person-ut.cpp
+    ReservationSystem-ut.cpp
     Seat-ut.cpp
 )
 
