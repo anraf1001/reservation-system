@@ -7,7 +7,7 @@
 
 class Seat {
 public:
-    Seat(char symbol, unsigned int id, std::shared_ptr<Person> owner) noexcept
+    Seat(char symbol, unsigned int id, const std::shared_ptr<Person>& owner) noexcept
         : symbol_{symbol}, id_{id}, owner_{owner} {}
     Seat(char symbol, unsigned int id) noexcept
         : Seat{symbol, id, nullptr} {}
