@@ -51,7 +51,7 @@ TEST_F(SeatTests, shouldTakeSeats) {
 
     for (const auto& seat : seatsVec) {
         EXPECT_TRUE(seat->isTaken());
-        EXPECT_EQ(seat->getOwner().get(), person1Ptr.get());
+        EXPECT_EQ(seat->getOwner(), person1Ptr.get());
     }
 
     auto person2Ptr = std::make_shared<Person>(rightName, rightSurname, rightPhoneNum, rightEmail, rightPESEL);
@@ -61,7 +61,7 @@ TEST_F(SeatTests, shouldTakeSeats) {
 
     for (const auto& seat : seatsVec) {
         EXPECT_TRUE(seat->isTaken());
-        EXPECT_EQ(seat->getOwner().get(), person2Ptr.get());
+        EXPECT_EQ(seat->getOwner(), person2Ptr.get());
     }
 }
 
