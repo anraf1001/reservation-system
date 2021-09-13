@@ -8,7 +8,7 @@ constexpr unsigned int standardPrice = 370;
 
 class StandardSeat : public Seat {
 public:
-    StandardSeat(unsigned int id, std::shared_ptr<Person> owner) noexcept
+    StandardSeat(unsigned int id, const std::shared_ptr<Person>& owner) noexcept
         : Seat(standardSeatSymbol, id, owner) {}
     StandardSeat(unsigned int id) noexcept
         : Seat(standardSeatSymbol, id) {}
