@@ -11,6 +11,7 @@ endif()
 
 set(SRC
     Person.cpp
+    Seat.cpp
 )
 set(SRC_UT
     Person-ut.cpp

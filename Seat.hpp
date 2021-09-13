@@ -29,11 +29,4 @@ protected:
     std::shared_ptr<Person> owner_;
 };
 
-std::ostream& operator<<(std::ostream& out, const Seat& seat) {
-    if (seat.isTaken()) {
-        out << ':' << seat.getSymbol() << ':';
-    } else {
-        out << '[' << seat.getSymbol() << ']';
-    }
-    return out;
-}
+std::ostream& operator<<(std::ostream& out, const Seat& seat);
