@@ -20,6 +20,18 @@ static std::shared_ptr<Person> tag_invoke(json::value_to_tag<std::shared_ptr<Per
         json::value_to<bool>(obj.at("vaccinated")));
 }
 
+static Persons tag_invoke(json::value_to_tag<Persons>, const json::value& jv) {
+    const auto& arr = jv.as_array();
+    Persons ret;
+    ret.reserve(arr.size());
+
+    for (const auto& el : arr) {
+        ret.push_back(json::value_to<std::shared_ptr<Person>>(el));
+    }
+
+    return ret;
+}
+
 static json::value readJson(std::istream& is, json::error_code& ec) {
     json::stream_parser parser;
     std::string line;
