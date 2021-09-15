@@ -1,0 +1,44 @@
+[
+    [
+        {
+            "type": "VIP",
+            "owner": null
+        },
+        {
+            "type": "Standard",
+            "owner": "20271854937"
+        },
+        {
+            "type": "Disabled",
+            "owner": null
+        }
+    ],
+    [
+        {
+            "type": "VIP",
+            "owner": null
+        },
+        {
+            "type": "Standard",
+            "owner": "20271854937"
+        },
+        {
+            "type": "Standard",
+            "owner": null
+        }
+    ],
+    [
+        {
+            "type": "VIP",
+            "owner": null
+        },
+        {
+            "type": "Standard",
+            "owner": null
+        },
+        {
+            "type": "Disabled",
+            "owner": null
+        }
+    ]
+]
