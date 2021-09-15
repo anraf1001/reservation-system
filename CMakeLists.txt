@@ -44,15 +44,19 @@ set(FLAGS
     -Wlogical-op
     -Wuseless-cast)
 
+set(Boost_USE_STATIC_LIBS   ON)
+find_package(Boost REQUIRED COMPONENTS json)
+include_directories(${BOOST_INCLUDE_DIRS})
+
 add_library(${PROJECT_NAME}-lib ${SRC})
 target_compile_options(${PROJECT_NAME}-lib PRIVATE ${FLAGS})
 
 add_executable(${PROJECT_NAME} main.cpp)
 target_compile_options(${PROJECT_NAME} PRIVATE ${FLAGS})
-target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}-lib)
+target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}-lib Boost::json)
 
 add_executable(${PROJECT_NAME}-ut ${SRC_UT})
-target_link_libraries(${PROJECT_NAME}-ut PUBLIC ${PROJECT_NAME}-lib gtest_main)
+target_link_libraries(${PROJECT_NAME}-ut PUBLIC ${PROJECT_NAME}-lib Boost::json gtest_main)
 
 include(GoogleTest)
 gtest_discover_tests(${PROJECT_NAME}-ut)
