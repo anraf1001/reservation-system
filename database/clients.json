@@ -1,0 +1,18 @@
+[
+    {
+        "pesel": "20271854937",
+        "name": "Jan",
+        "surname": "Kowalski",
+        "phoneNum": "123456789",
+        "email": "email@email.com",
+        "vaccinated": false
+    },
+    {
+        "pesel": "00211009692",
+        "name": "Jan",
+        "surname": "Nowak",
+        "phoneNum": "987654321",
+        "email": "gmail@gmail.com",
+        "vaccinated": true
+    }
+]
