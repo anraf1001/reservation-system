@@ -19,12 +19,16 @@ using Stadium = std::vector<Row>;
 class ReservationSystem {
 public:
     ReservationSystem();
+    ~ReservationSystem();
 
     void printStadium() const;
 
 private:
-    void readClientsDatabase(const fs::path& database);
-    void readSeatsDatabase(const fs::path& database, SeatPtrFactory& ptrFactory);
+    void readClientsDatabase();
+    void readSeatsDatabase(SeatPtrFactory& ptrFactory);
+
+    void saveClientsDatabase();
+    void saveSeatsDatabase();
 
     std::unique_ptr<Seat> seatFromJsonValue(const json::value& jv, SeatPtrFactory& ptrFactory);
     Row rowFromJsonValue(const json::value& jv, SeatPtrFactory& ptrFactory);
@@ -32,4 +36,6 @@ private:
 
     Stadium stadium_;
     Persons clients_;
+
+    const fs::path dbDirectory_{"../database"};
 };
