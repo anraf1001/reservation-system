@@ -250,11 +250,11 @@ static void printJson(std::ostream& os, const json::value& jv) {
 }
 
 void ReservationSystem::saveClientsDatabase() {
-    fs::path actualClientsFile{clientsFilename};
+    fs::path currentClientsFile{clientsFilename};
     fs::path backupClientsFile{std::string{clientsFilename} + ".old"};
-    fs::copy_file(dbDirectory_ / actualClientsFile, dbDirectory_ / backupClientsFile, fs::copy_options::overwrite_existing);
+    fs::copy_file(dbDirectory_ / currentClientsFile, dbDirectory_ / backupClientsFile, fs::copy_options::overwrite_existing);
 
-    std::ofstream outputFile{dbDirectory_ / actualClientsFile, std::ios::trunc};
+    std::ofstream outputFile{dbDirectory_ / currentClientsFile, std::ios::trunc};
 
     auto jv = json::value_from(clients_);
     printJson(outputFile, jv);
