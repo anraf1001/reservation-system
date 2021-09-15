@@ -13,7 +13,7 @@
 
 namespace chrono = std::chrono;
 
-const std::regex phoneNumRegex{R"(^(\+\d{2,3})?\s?(\d{3})[-\s]?(\d{3})[-\s]?(\d{3})$)"};
+constexpr const char* phoneNumRegexStr = R"(^(\+\d{2,3})?\s?(\d{3})[-\s]?(\d{3})[-\s]?(\d{3})$)";
 
 static int calculateYearsFromDate(const std::string& pesel) {
     using Days = chrono::days;
@@ -52,6 +52,7 @@ static bool isSurnameValid(const std::string& surname) {
 }
 
 static bool isPhoneNumValid(const std::string& phoneNum) {
+    const std::regex phoneNumRegex{phoneNumRegexStr};
     return std::regex_match(phoneNum, phoneNumRegex);
 }
 
@@ -95,6 +96,7 @@ static bool isPESELValid(const std::string& pesel) {
 
 static std::string formatPhonenNum(const std::string& phoneNum) {
     std::smatch matches;
+    const std::regex phoneNumRegex{phoneNumRegexStr};
     std::regex_search(phoneNum, matches, phoneNumRegex);
 
     std::string formattedPhoneNum = matches[2];
