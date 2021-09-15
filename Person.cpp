@@ -15,7 +15,7 @@ namespace chrono = std::chrono;
 
 const std::regex phoneNumRegex{R"(^(\+\d{2,3})?\s?(\d{3})[-\s]?(\d{3})[-\s]?(\d{3})$)"};
 
-int calculateYearsFromDate(const std::string& pesel) {
+static int calculateYearsFromDate(const std::string& pesel) {
     using Days = chrono::days;
     using Years = chrono::years;
 
@@ -40,32 +40,32 @@ int calculateYearsFromDate(const std::string& pesel) {
     return static_cast<int>(chrono::floor<Years>(today - dateOfBirth).count());
 }
 
-bool isNameValid(const std::string& name) {
+static bool isNameValid(const std::string& name) {
     return isupper(name.front()) &&
            std::all_of(name.begin() + 1, name.end(), [](auto letter) {
                return islower(letter);
            });
 }
 
-bool isSurnameValid(const std::string& surname) {
+static bool isSurnameValid(const std::string& surname) {
     return isNameValid(surname);
 }
 
-bool isPhoneNumValid(const std::string& phoneNum) {
+static bool isPhoneNumValid(const std::string& phoneNum) {
     return std::regex_match(phoneNum, phoneNumRegex);
 }
 
-bool isEmailValid(const std::string& email) {
+static bool isEmailValid(const std::string& email) {
     const std::regex emailRegex{R"(^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]+$)"};
     return std::regex_match(email, emailRegex);
 }
 
-int intFromChar(char charToConv) noexcept {
+static int intFromChar(char charToConv) noexcept {
     constexpr char firstDigit = '0';
     return charToConv - firstDigit;
 }
 
-bool isPESELValid(const std::string& pesel) {
+static bool isPESELValid(const std::string& pesel) {
     if (pesel.size() != 11 || std::any_of(pesel.cbegin(), pesel.cend(),
                                           [](auto el) {
                                               return !isdigit(el);
@@ -93,7 +93,7 @@ bool isPESELValid(const std::string& pesel) {
     return calculateYearsFromDate(pesel) >= 0;
 }
 
-std::string formatPhonenNum(const std::string& phoneNum) {
+static std::string formatPhonenNum(const std::string& phoneNum) {
     std::smatch matches;
     std::regex_search(phoneNum, matches, phoneNumRegex);
 
