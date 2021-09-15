@@ -38,7 +38,7 @@ static Persons tag_invoke(json::value_to_tag<Persons>, const json::value& jv) {
     return ret;
 }
 
-static void tag_invoke(json::value_from_tag, json::value& jv, std::shared_ptr<Person> person) {
+static void tag_invoke(json::value_from_tag, json::value& jv, const std::shared_ptr<Person>& person) {
     jv = {{"pesel", person->getPesel()},
           {"name", person->getName()},
           {"surname", person->getSurname()},
