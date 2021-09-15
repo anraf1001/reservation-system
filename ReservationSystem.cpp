@@ -13,6 +13,7 @@
 namespace json = boost::json;
 
 constexpr const char* clientsFilename = "clients.json";
+constexpr const char* stadiumFilename = "stadium.json";
 
 static std::shared_ptr<Person> tag_invoke(json::value_to_tag<std::shared_ptr<Person>>, const json::value& jv) {
     const auto& obj = jv.as_object();
@@ -131,7 +132,7 @@ void ReservationSystem::readClientsDatabase() {
 }
 
 void ReservationSystem::readSeatsDatabase(SeatPtrFactory& ptrFactory) {
-    fs::path stadiumDBFilename{"stadium.json"};
+    fs::path stadiumDBFilename{stadiumFilename};
     if (!fs::is_regular_file(dbDirectory_ / stadiumDBFilename)) {
         throw WrongPath{"No stadium.json file"};
     }
@@ -262,6 +263,15 @@ void ReservationSystem::saveClientsDatabase() {
 }
 
 void ReservationSystem::saveSeatsDatabase() {
+    fs::path currentStadiumFile{stadiumFilename};
+    fs::path backupStadiumFile{std::string{stadiumFilename} + ".old"};
+    fs::copy_file(dbDirectory_ / currentStadiumFile, dbDirectory_ / backupStadiumFile, fs::copy_options::overwrite_existing);
+
+    std::ofstream outputFile{dbDirectory_ / currentStadiumFile, std::ios::trunc};
+
+    auto jv = json::value_from(stadium_);
+
+    fs::remove(dbDirectory_ / backupStadiumFile);
 }
 
 ReservationSystem::~ReservationSystem() {
