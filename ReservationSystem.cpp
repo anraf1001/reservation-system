@@ -1,7 +1,6 @@
 #include "ReservationSystem.hpp"
 
 #include <boost/json/src.hpp>
-#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -9,7 +8,17 @@
 #include "exceptions/WrongPath.hpp"
 
 namespace json = boost::json;
-namespace fs = std::filesystem;
+
+std::shared_ptr<Person> tag_invoke(json::value_to_tag<std::shared_ptr<Person>>, const json::value& jv) {
+    const auto& obj = jv.as_object();
+    return std::make_shared<Person>(
+        json::value_to<std::string>(obj.at("name")),
+        json::value_to<std::string>(obj.at("surname")),
+        json::value_to<std::string>(obj.at("phoneNum")),
+        json::value_to<std::string>(obj.at("email")),
+        json::value_to<std::string>(obj.at("pesel")),
+        json::value_to<bool>(obj.at("vaccinated")));
+}
 
 json::value readJson(std::istream& is, json::error_code& ec) {
     json::stream_parser parser;
@@ -31,17 +40,20 @@ json::value readJson(std::istream& is, json::error_code& ec) {
     return parser.release();
 }
 
-void readClientsDatabase(const fs::path& database) {
+void ReservationSystem::readClientsDatabase(const fs::path& database) {
     fs::path clientsDBFilename{"clients.json"};
     if (!fs::is_regular_file(database / clientsDBFilename)) {
         throw WrongPath{"No clients.json file"};
     }
+
     std::ifstream clientsFile{database / clientsDBFilename};
 
     json::value clientsJson;
     json::error_code ec;
 
     clientsJson = readJson(clientsFile, ec);
+
+    clients_ = json::value_to<Persons>(clientsJson);
 }
 
 ReservationSystem::ReservationSystem() {
