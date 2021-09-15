@@ -9,7 +9,7 @@
 
 namespace json = boost::json;
 
-std::shared_ptr<Person> tag_invoke(json::value_to_tag<std::shared_ptr<Person>>, const json::value& jv) {
+static std::shared_ptr<Person> tag_invoke(json::value_to_tag<std::shared_ptr<Person>>, const json::value& jv) {
     const auto& obj = jv.as_object();
     return std::make_shared<Person>(
         json::value_to<std::string>(obj.at("name")),
@@ -20,7 +20,7 @@ std::shared_ptr<Person> tag_invoke(json::value_to_tag<std::shared_ptr<Person>>, 
         json::value_to<bool>(obj.at("vaccinated")));
 }
 
-json::value readJson(std::istream& is, json::error_code& ec) {
+static json::value readJson(std::istream& is, json::error_code& ec) {
     json::stream_parser parser;
     std::string line;
 
