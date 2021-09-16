@@ -306,6 +306,7 @@ void ReservationSystem::saveSeatsDatabase() {
     std::ofstream outputFile{dbDirectory_ / currentStadiumFile, std::ios::trunc};
 
     auto jv = json::value_from(stadium_);
+    printJson(outputFile, jv);
 
     fs::remove(dbDirectory_ / backupStadiumFile);
 }
