@@ -4,6 +4,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <string_view>
 
 #include "DisabledSeat.hpp"
 #include "StandardSeat.hpp"
@@ -12,8 +13,8 @@
 
 namespace json = boost::json;
 
-constexpr const char* clientsFilename = "clients.json";
-constexpr const char* stadiumFilename = "stadium.json";
+constexpr std::string_view clientsFilename = "clients.json";
+constexpr std::string_view stadiumFilename = "stadium.json";
 
 static std::shared_ptr<Person> tag_invoke(json::value_to_tag<std::shared_ptr<Person>>, const json::value& jv) {
     const auto& obj = jv.as_object();
