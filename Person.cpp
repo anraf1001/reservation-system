@@ -15,13 +15,13 @@ namespace chrono = std::chrono;
 
 constexpr const char* phoneNumRegexStr = R"(^(\+\d{2,3})?\s?(\d{3})[-\s]?(\d{3})[-\s]?(\d{3})$)";
 
-static int calculateYearsFromDate(const std::string& pesel) {
+static int calculateYearsFromDate(std::string_view pesel) {
     using Days = chrono::days;
     using Years = chrono::years;
 
-    std::string yearStr = pesel.substr(0, 2);
-    std::string monthStr = pesel.substr(2, 2);
-    std::string dayStr = pesel.substr(4, 2);
+    std::string yearStr{pesel.substr(0, 2)};
+    std::string monthStr{pesel.substr(2, 2)};
+    std::string dayStr{pesel.substr(4, 2)};
 
     chrono::day day{static_cast<unsigned>(std::stoi(dayStr))};
     chrono::month month;
@@ -40,25 +40,27 @@ static int calculateYearsFromDate(const std::string& pesel) {
     return static_cast<int>(chrono::floor<Years>(today - dateOfBirth).count());
 }
 
-static bool isNameValid(const std::string& name) {
+static bool isNameValid(std::string_view name) {
     return isupper(name.front()) &&
            std::all_of(name.begin() + 1, name.end(), [](auto letter) {
                return islower(letter);
            });
 }
 
-static bool isSurnameValid(const std::string& surname) {
+static bool isSurnameValid(std::string_view surname) {
     return isNameValid(surname);
 }
 
-static bool isPhoneNumValid(const std::string& phoneNum) {
+static bool isPhoneNumValid(std::string_view phoneNum) {
     const std::regex phoneNumRegex{phoneNumRegexStr};
-    return std::regex_match(phoneNum, phoneNumRegex);
+    const std::string phoneNumStr{phoneNum};
+    return std::regex_match(phoneNumStr, phoneNumRegex);
 }
 
-static bool isEmailValid(const std::string& email) {
+static bool isEmailValid(std::string_view email) {
     const std::regex emailRegex{R"(^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]+$)"};
-    return std::regex_match(email, emailRegex);
+    const std::string emailStr{email};
+    return std::regex_match(emailStr, emailRegex);
 }
 
 static int intFromChar(char charToConv) noexcept {
@@ -66,7 +68,7 @@ static int intFromChar(char charToConv) noexcept {
     return charToConv - firstDigit;
 }
 
-static bool isPESELValid(const std::string& pesel) {
+static bool isPESELValid(std::string_view pesel) {
     if (pesel.size() != 11 || std::any_of(pesel.cbegin(), pesel.cend(),
                                           [](auto el) {
                                               return !isdigit(el);
@@ -94,10 +96,11 @@ static bool isPESELValid(const std::string& pesel) {
     return calculateYearsFromDate(pesel) >= 0;
 }
 
-static std::string formatPhonenNum(const std::string& phoneNum) {
+static std::string formatPhonenNum(std::string_view phoneNum) {
     std::smatch matches;
     const std::regex phoneNumRegex{phoneNumRegexStr};
-    std::regex_search(phoneNum, matches, phoneNumRegex);
+    const std::string phoneNumStr{phoneNum};
+    std::regex_search(phoneNumStr, matches, phoneNumRegex);
 
     std::string formattedPhoneNum = matches[2];
     formattedPhoneNum += matches[3];
@@ -106,11 +109,11 @@ static std::string formatPhonenNum(const std::string& phoneNum) {
     return formattedPhoneNum;
 }
 
-Person::Person(const std::string& name,
-               const std::string& surname,
-               const std::string& phoneNum,
-               const std::string& email,
-               const std::string& pesel,
+Person::Person(std::string_view name,
+               std::string_view surname,
+               std::string_view phoneNum,
+               std::string_view email,
+               std::string_view pesel,
                bool isVaccinated)
     : isVaccinated_{isVaccinated} {
     if (!isNameValid(name)) {

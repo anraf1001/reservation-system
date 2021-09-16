@@ -1,21 +1,22 @@
 #pragma once
 
 #include <string>
+#include <string_view>
 
 class Person {
 public:
-    Person(const std::string& name,
-           const std::string& surname,
-           const std::string& phoneNum,
-           const std::string& email,
-           const std::string& pesel,
+    Person(std::string_view name,
+           std::string_view surname,
+           std::string_view phoneNum,
+           std::string_view email,
+           std::string_view pesel,
            bool isVaccinated);
 
-    Person(const std::string& name,
-           const std::string& surname,
-           const std::string& phoneNum,
-           const std::string& email,
-           const std::string& pesel)
+    Person(std::string_view name,
+           std::string_view surname,
+           std::string_view phoneNum,
+           std::string_view email,
+           std::string_view pesel)
         : Person{name, surname, phoneNum, email, pesel, false} {}
 
     void setAsVaccinated() { isVaccinated_ = true; }

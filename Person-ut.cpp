@@ -3,6 +3,7 @@
 #include "Person.hpp"
 
 #include <tuple>
+#include <string_view>
 
 #include "exceptions/WrongEmail.hpp"
 #include "exceptions/WrongName.hpp"
@@ -10,11 +11,11 @@
 #include "exceptions/WrongPhoneNum.hpp"
 #include "exceptions/WrongSurname.hpp"
 
-constexpr const char* rightName = "Jan";
-constexpr const char* rightSurname = "Kowalski";
-constexpr const char* rightPhoneNum = "123456789";
-constexpr const char* rightEmail = "test@email.com";
-constexpr const char* rightPESEL = "20271854937";
+constexpr std::string_view rightName = "Jan";
+constexpr std::string_view rightSurname = "Kowalski";
+constexpr std::string_view rightPhoneNum = "123456789";
+constexpr std::string_view rightEmail = "test@email.com";
+constexpr std::string_view rightPESEL = "20271854937";
 
 struct wrongNameTest : ::testing::TestWithParam<std::string> {};
 struct wrongSurnameTest : ::testing::TestWithParam<std::string> {};
@@ -57,9 +58,9 @@ TEST_P(wrongPESELTest, shouldThrowExceptionForWrongPESEL) {
 }
 
 TEST(getAgeTest, shouldCalculateAgeFromPESELNum) {
-    constexpr const char* pesel1900 = "78051654912";
+    constexpr std::string_view pesel1900 = "78051654912";
     constexpr unsigned int pesel1900Age = 43;
-    constexpr const char* pesel2000 = "20271854937";
+    constexpr std::string_view pesel2000 = "20271854937";
     constexpr unsigned int pesel2000Age = 1;
 
     Person person1{rightName, rightSurname, rightPhoneNum, rightEmail, pesel1900};
