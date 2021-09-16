@@ -27,8 +27,8 @@ private:
     void readClientsDatabase();
     void readSeatsDatabase(SeatPtrFactory& ptrFactory);
 
-    void saveClientsDatabase();
-    void saveSeatsDatabase();
+    void saveClientsDatabase() const;
+    void saveSeatsDatabase() const;
 
     std::unique_ptr<Seat> seatFromJsonValue(const json::value& jv, SeatPtrFactory& ptrFactory);
     Row rowFromJsonValue(const json::value& jv, SeatPtrFactory& ptrFactory);
