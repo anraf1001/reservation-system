@@ -16,7 +16,6 @@ set(SRC
 )
 set(SRC_UT
     Person-ut.cpp
-    ReservationSystem-ut.cpp
     Seat-ut.cpp
 )
 
