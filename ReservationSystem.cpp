@@ -47,6 +47,42 @@ static void tag_invoke(json::value_from_tag, json::value& jv, const std::shared_
           {"vaccinated", person->isVaccinated()}};
 }
 
+static void tag_invoke(json::value_from_tag, json::value& jv, const std::unique_ptr<Seat>& seat) {
+    std::string type;
+    switch (seat->getSymbol()) {
+    case standardSeatSymbol:
+        type = "Standard";
+        break;
+
+    case vipSeatSymbol:
+        type = "VIP";
+        break;
+
+    case disabledSeatSymbol:
+        type = "Disabled";
+        break;
+    }
+
+    if (!seat->isTaken()) {
+        jv = {{"type", type},
+              {"owner", nullptr}};
+    } else {
+        jv = {{"type", type},
+              {"owner", seat->getOwner()->getPesel()}};
+    }
+}
+
+static void tag_invoke(json::value_from_tag, json::value& jv, const Row& row) {
+    json::array arr;
+    arr.reserve(row.size());
+
+    for (const auto& seat : row) {
+        arr.push_back(json::value_from(seat));
+    }
+
+    jv = arr;
+}
+
 std::unique_ptr<Seat> ReservationSystem::seatFromJsonValue(const json::value& jv, SeatPtrFactory& ptrFactory) {
     const auto& obj = jv.as_object();
 
