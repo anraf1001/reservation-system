@@ -286,7 +286,7 @@ static void printJson(std::ostream& os, const json::value& jv) {
         os << "\n";
 }
 
-void ReservationSystem::saveClientsDatabase() const {
+void ReservationSystem::saveClientsDatabase() const try {
     fs::path currentClientsFile{clientsFilename};
     fs::path backupClientsFile{std::string{clientsFilename} + ".old"};
     fs::copy_file(dbDirectory_ / currentClientsFile, dbDirectory_ / backupClientsFile, fs::copy_options::overwrite_existing);
@@ -297,9 +297,11 @@ void ReservationSystem::saveClientsDatabase() const {
     printJson(outputFile, jv);
 
     fs::remove(dbDirectory_ / backupClientsFile);
+} catch (const fs::filesystem_error& exc) {
+    std::cerr << exc.what() << '\n';
 }
 
-void ReservationSystem::saveSeatsDatabase() const {
+void ReservationSystem::saveSeatsDatabase() const try {
     fs::path currentStadiumFile{stadiumFilename};
     fs::path backupStadiumFile{std::string{stadiumFilename} + ".old"};
     fs::copy_file(dbDirectory_ / currentStadiumFile, dbDirectory_ / backupStadiumFile, fs::copy_options::overwrite_existing);
@@ -310,6 +312,8 @@ void ReservationSystem::saveSeatsDatabase() const {
     printJson(outputFile, jv);
 
     fs::remove(dbDirectory_ / backupStadiumFile);
+} catch (const fs::filesystem_error& exc) {
+    std::cerr << exc.what() << '\n';
 }
 
 ReservationSystem::~ReservationSystem() {
