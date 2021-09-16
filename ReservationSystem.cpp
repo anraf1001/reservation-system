@@ -285,7 +285,7 @@ static void printJson(std::ostream& os, const json::value& jv) {
         os << "\n";
 }
 
-void ReservationSystem::saveClientsDatabase() {
+void ReservationSystem::saveClientsDatabase() const {
     fs::path currentClientsFile{clientsFilename};
     fs::path backupClientsFile{std::string{clientsFilename} + ".old"};
     fs::copy_file(dbDirectory_ / currentClientsFile, dbDirectory_ / backupClientsFile, fs::copy_options::overwrite_existing);
@@ -298,7 +298,7 @@ void ReservationSystem::saveClientsDatabase() {
     fs::remove(dbDirectory_ / backupClientsFile);
 }
 
-void ReservationSystem::saveSeatsDatabase() {
+void ReservationSystem::saveSeatsDatabase() const {
     fs::path currentStadiumFile{stadiumFilename};
     fs::path backupStadiumFile{std::string{stadiumFilename} + ".old"};
     fs::copy_file(dbDirectory_ / currentStadiumFile, dbDirectory_ / backupStadiumFile, fs::copy_options::overwrite_existing);
