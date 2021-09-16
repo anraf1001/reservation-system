@@ -1,10 +1,9 @@
 #include "Seat.hpp"
 
 std::ostream& operator<<(std::ostream& out, const Seat& seat) {
-    if (seat.isTaken()) {
-        out << ':' << seat.getSymbol() << ':';
-    } else {
-        out << '[' << seat.getSymbol() << ']';
-    }
+    const char statusChar = seat.isTaken() ? ':' : '|';
+
+    out << statusChar << seat.getSymbol() << statusChar;
+
     return out;
 }
