@@ -11,7 +11,7 @@ jobs:
     - uses: actions/checkout@v1
     
     - name: Download g++-11
-      run: sudo apt install g++-11 -y
+      run: sudo apt install g++-11 libboost-all-dev -y
       
     - name: Create build folder
       run: mkdir build
